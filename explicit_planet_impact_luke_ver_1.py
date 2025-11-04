@@ -75,13 +75,9 @@ while counter < time :
     w[0,:] = w[1,:]
     w[-1,:] = w[-2,:]
 
-    for i in range(1, nodes - 1):
-        for j in range(1, nodes - 1):
-
-            dd_ux = (w[i-1, j] - 2*w[i, j] + w[i+1, j])/dx**2
-            dd_uy = (w[i, j-1] - 2*w[i, j] + w[i, j+1])/dy**2
-
-            u[i, j] = dt * a[i,j] * (dd_ux + dd_uy) + w[i, j]
+    ddx = (w[2:, 1:-1] - 2*w[1:-1, 1:-1] + w[:-2, 1:-1]) / dx**2
+    ddy = (w[1:-1, 2:] - 2*w[1:-1, 1:-1] + w[1:-1, :-2]) / dy**2
+    u[1:-1, 1:-1] = w[1:-1, 1:-1] + dt * a[1:-1, 1:-1] * (ddx + ddy)
 
     #trying to make this shit work boundary shit
     u[:,0] = u[:,1]
