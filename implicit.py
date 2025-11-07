@@ -90,7 +90,7 @@ print("Running the thing")
 # grid
 N = 100
 dt = 1e-4
-
+alpha = 0.5
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 
