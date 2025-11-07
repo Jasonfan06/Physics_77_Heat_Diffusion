@@ -95,7 +95,7 @@ x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 
 h = 1/N
-k = dt/(2*h**2)
+k = alpha * dt/(2*h**2)
 
 u0 = np.array(letter_m_ini(x, y, N), dtype=np.float32)
 
