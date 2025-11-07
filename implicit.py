@@ -4,29 +4,6 @@ from tqdm import tqdm
 from matplotlib.textpath import TextPath
 import matplotlib.transforms as transforms
 
-
-def star_ini(x, y, N):
-    """
-    Creates the 'star' shaped initial condition.
-    """
-    R0 = .25
-    eps = 5 * 0.01 / (2 * np.sqrt(2) * np.arctanh(0.9))
-    pn = np.zeros((N,N))
-    for i in range(N):
-        for j in range(N):
-            if x[i] > 0.5:
-                theta = np.arctan2(y[j] - 0.5, x[i] - 0.5)
-                pn[i, j] = np.tanh(
-                    (R0 + 0.1 * np.cos(6 * theta) - (np.sqrt((x[i] - 0.5) ** 2 + (y[j] - 0.5) ** 2))) / (
-                            np.sqrt(2.0) * eps))
-            else:
-                theta = np.pi + np.arctan2(y[j] - 0.5, x[i] - 0.5)
-                pn[i, j] = np.tanh(
-                    (R0 + 0.1 * np.cos(6 * theta) - (np.sqrt((x[i] - 0.5) ** 2 + (y[j] - 0.5) ** 2))) / (
-                            np.sqrt(2.0) * eps))
-            
-    return pn
-
 def letter_m_ini(x, y, N):
     tp = TextPath((0, 0), "M", size=1)
     bbox = tp.get_extents()
@@ -135,7 +112,7 @@ u_star = np.zeros((N,N), dtype=np.float32)
 max_iter = 100
 
 print("3. Started iteration session")
-for it in tqdm[int](range(max_iter-1)):
+for it in range(max_iter-1):
     
     u_padded = np.pad(u, 1, mode='edge')
     
