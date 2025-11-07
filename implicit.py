@@ -4,15 +4,18 @@ from tqdm import tqdm
 from matplotlib.textpath import TextPath
 import matplotlib.transforms as transforms
 
+alpha = 0.1 # heat dif constant
+
+letter = "EDGAR"
 def letter_m_ini(x, y, N):
-    tp = TextPath((0, 0), "M", size=1)
+    tp = TextPath((0, 0), letter, size=1)
     bbox = tp.get_extents()
 
     scale = 0.8 / max(bbox.width, bbox.height)
     trans = transforms.Affine2D().scale(scale).translate(0.1, 0.1)
     path = tp.transformed(trans)
 
-    xv, yv = np.meshgrid(x, y, indexing='ij')
+    xv, yv = np.meshgrid(x, y, indexing='xy')
     pts = np.vstack([xv.ravel(), yv.ravel()]).T
 
     inside = path.contains_points(pts).reshape((N, N))
@@ -90,7 +93,6 @@ print("Running the thing")
 # grid
 N = 100
 dt = 1e-4
-alpha = 0.5
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 
