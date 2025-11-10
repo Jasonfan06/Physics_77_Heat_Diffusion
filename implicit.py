@@ -7,7 +7,7 @@ import matplotlib.transforms as transforms
 alpha = 0.1 # heat dif constant
 
 letter = "EDGAR"
-def letter_m_ini(x, y, N):
+def letter_m_ini(x, y, N, temp_inside, temp_outside):
     tp = TextPath((0, 0), letter, size=1)
     bbox = tp.get_extents()
 
@@ -21,7 +21,7 @@ def letter_m_ini(x, y, N):
     inside = path.contains_points(pts).reshape((N, N))
 
     eps = 5 * 0.01 / (2 * np.sqrt(2) * np.arctanh(0.9))
-    phi = np.where(inside, 1.0, -1.0)
+    phi = np.where(inside, temp_inside, temp_outside)
     return np.tanh(phi / (np.sqrt(2.0) * eps))
 
 def resplot(x, y, u_pred, dt, max_iter):
@@ -61,7 +61,7 @@ def resplot(x, y, u_pred, dt, max_iter):
     
     # Plot 4: Final state
     plt.subplot(144)
-    plt.imshow(u_pred[-1], interpolation='nearest', cmap='jet',
+    im = plt.imshow(u_pred[-1], interpolation='nearest', cmap='jet',
                  extent=[x.min(), x.max(), y.min(), y.max()],
                  origin='lower', aspect='auto')
     plt.clim(-1, 1)
@@ -69,6 +69,7 @@ def resplot(x, y, u_pred, dt, max_iter):
     plt.title('$u_{%d}$ (t=%.3f)' %(max_iter, dt*max_iter), fontsize=15)
     
     # Save the figure
+    fig.colorbar(im, ax=fig.axes, shrink=0.8, pad=0.02)
     plt.savefig('./cn2d_numpy.png')
     print("4. Plot saved as cn2d_numpy.png")
 
@@ -99,7 +100,10 @@ y = np.linspace(0, 1, N)
 h = 1/N
 k = alpha * dt/(2*h**2)
 
-u0 = np.array(letter_m_ini(x, y, N), dtype=np.float32)
+T_font = 1.0        # Set letter temperature
+T_surrounding = -0.5  # Set surrounding temperature
+
+u0 = np.array(letter_m_ini(x, y, N, T_font, T_surrounding), dtype=np.float32)
 
 A = np.array(tri_disc(N, k), dtype=np.float32)
 C = np.array(tri_disc(N, k), dtype=np.float32) 
