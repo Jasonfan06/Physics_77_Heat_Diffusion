@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 from matplotlib.textpath import TextPath
 import matplotlib.transforms as transforms
 
@@ -29,44 +28,55 @@ def resplot(x, y, u_pred, dt, max_iter):
     Plots the results at 4 different time steps.
     """
     fig = plt.figure(figsize=(8, 2))
+    fig.subplots_adjust(wspace=0.4)  # increase gap between subplots
     
     # Plot 1: Initial state
-    plt.subplot(141)
-    plt.imshow(u_pred[0], interpolation='nearest', cmap='jet',
+    ax = plt.subplot(141)
+    im1 = ax.imshow(u_pred[0], interpolation='nearest', cmap='jet',
                  extent=[x.min(), x.max(), y.min(), y.max()],
-                 origin='lower', aspect='auto')
-    plt.clim(-1, 1)
-    plt.axis('off')
-    plt.title('$u_0$', fontsize=15)
+                 origin='lower', aspect='equal')
+    ax.set_title('$u_0$', fontsize=15, pad=4)
+    ax.text(0.5, -0.12, '$t = 0$', transform=ax.transAxes,
+            ha='center', va='top', fontsize=12)
+    ax.axis('off')
+    im1.set_clim(-1, 1)
     
     # Plot 2: 25% complete
-    plt.subplot(142)
+    ax = plt.subplot(142)
     l = int(0.25*max_iter)
-    plt.imshow(u_pred[l], interpolation='nearest', cmap='jet',
+    ax.imshow(u_pred[l], interpolation='nearest', cmap='jet',
                  extent=[x.min(), x.max(), y.min(), y.max()],
-                 origin='lower', aspect='auto')
-    plt.clim(-1, 1)
-    plt.axis('off')
-    plt.title('$u_{%d}$ (t=%.3f)' %(l, dt*l), fontsize=15)
+                 origin='lower', aspect='equal')
+    ax.set_title('$u_{%d}$' % l, fontsize=15, pad=4)
+    ax.text(0.5, -0.12, '$t = %.3f$' % (dt*l), transform=ax.transAxes,
+            ha='center', va='top', fontsize=12)
+    ax.axis('off')
+    im2 = ax.images[0]
+    im2.set_clim(-1, 1)
     
     # Plot 3: 50% complete
-    plt.subplot(143)
+    ax = plt.subplot(143)
     l = int(0.5*max_iter)
-    plt.imshow(u_pred[l], interpolation='nearest', cmap='jet',
+    ax.imshow(u_pred[l], interpolation='nearest', cmap='jet',
                  extent=[x.min(), x.max(), y.min(), y.max()],
-                 origin='lower', aspect='auto')
-    plt.clim(-1, 1)
-    plt.axis('off')
-    plt.title('$u_{%d}$ (t=%.3f)' %(l, dt*l), fontsize=15)
+                 origin='lower', aspect='equal')
+    ax.set_title('$u_{%d}$' % l, fontsize=15, pad=4)
+    ax.text(0.5, -0.12, '$t = %.3f$' % (dt*l), transform=ax.transAxes,
+            ha='center', va='top', fontsize=12)
+    ax.axis('off')
+    im3 = ax.images[0]
+    im3.set_clim(-1, 1)
     
     # Plot 4: Final state
-    plt.subplot(144)
-    im = plt.imshow(u_pred[-1], interpolation='nearest', cmap='jet',
+    ax = plt.subplot(144)
+    im = ax.imshow(u_pred[-1], interpolation='nearest', cmap='jet',
                  extent=[x.min(), x.max(), y.min(), y.max()],
-                 origin='lower', aspect='auto')
-    plt.clim(-1, 1)
-    plt.axis('off')
-    plt.title('$u_{%d}$ (t=%.3f)' %(max_iter, dt*max_iter), fontsize=15)
+                 origin='lower', aspect='equal')
+    ax.set_title('$u_{%d}$' % max_iter, fontsize=15, pad=4)
+    ax.text(0.5, -0.12, '$t = %.3f$' % (dt*max_iter), transform=ax.transAxes,
+            ha='center', va='top', fontsize=12)
+    ax.axis('off')
+    im.set_clim(-1, 1)
     
     # Save the figure
     fig.colorbar(im, ax=fig.axes, shrink=0.8, pad=0.02)
