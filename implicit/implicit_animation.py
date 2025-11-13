@@ -28,8 +28,7 @@ def letter_m_ini(x, y, N, temp_inside, temp_outside):
 
 def tri_disc(N, a):
     """
-    Creates the 1D implicit operator matrix (I - a*D_xx)
-    with Neumann boundary conditions.
+    Creates the 1D implicit operator matrix (I - a*D_xx) with Neumann boundary conditions.
     """
     M = (np.diag(-a * np.ones(N-1), k=-1) +
          np.diag((1+2*a) * np.ones(N), k=0) +
