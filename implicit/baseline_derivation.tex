@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper,landscape]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\begin{document}
+
+\title{Mathematical Derivation: Function Transformations and Exponential Operators}
+\author{}
+\date{}
+
+\section{}
+\[
+f(x_1, x_2) \in C^\infty(\mathbb{R}^2), pf: e^{t \partial_{x_1}^n \partial_{x_2}^m} f(x_1, x_2) e^{-t \partial_{x_1}^n \partial_{x_2}^m} = f(x_1 + nt \partial_{x_1}^{n-1} \partial_{x_2}^m, x_2 + mt \partial_{x_1}^n \partial_{x_2}^{m-1})
+\]
+
+\[
+\text{sol: } f(x_1, x_2) \in C^\infty(\mathbb{R}^2) \Rightarrow f(x_1, x_2) = \sum_{\alpha, \beta \in \mathbb{N}} f_{\alpha \beta} x_1^\alpha x_2^\beta
+\]
+
+\begin{flalign*}
+e^{t \partial_{x_1}^n \partial_{x_2}^m} f(x_1, x_2) e^{-t \partial_{x_1}^n \partial_{x_2}^m} &= e^{t \partial_{x_1}^n \partial_{x_2}^m} \left( \sum_{\alpha, \beta \in \mathbb{N}} f_{\alpha \beta} x_1^\alpha x_2^\beta \right) e^{-t \partial_{x_1}^n \partial_{x_2}^m} &\\
+&= \sum_{\alpha, \beta \in \mathbb{N}} f_{\alpha \beta} \left[ e^{t \partial_{x_1}^n \partial_{x_2}^m} x_1^\alpha x_2^\beta e^{-t \partial_{x_1}^n \partial_{x_2}^m} \right] &\\
+&= \sum_{\alpha, \beta \in \mathbb{N}} f_{\alpha \beta} \left[ e^{t \partial_{x_1}^n \partial_{x_2}^m} x_1^\alpha e^{-t \partial_{x_1}^n \partial_{x_2}^m} \right] \left[ e^{t \partial_{x_1}^n \partial_{x_2}^m} x_2^\beta e^{-t \partial_{x_1}^n \partial_{x_2}^m} \right] &\\
+&= \sum_{\alpha, \beta \in \mathbb{N}} f_{\alpha \beta} \left[ e^{t \partial_{x_1}^n \partial_{x_2}^m} x_1 e^{-t \partial_{x_1}^n \partial_{x_2}^m} \right]^\alpha \left[ e^{t \partial_{x_1}^n \partial_{x_2}^m} x_2 e^{-t \partial_{x_1}^n \partial_{x_2}^m} \right]^\beta &\\
+&= \sum_{\alpha, \beta \in \mathbb{N}} f_{\alpha \beta} \left[ x_1 + nt \partial_{x_1}^{n-1} \partial_{x_2}^m \right]^\alpha \left[ x_2 + mt \partial_{x_1}^n \partial_{x_2}^{m-1} \right]^\beta &\\
+&= f(x_1 + nt \partial_{x_1}^{n-1} \partial_{x_2}^m, x_2 + mt \partial_{x_1}^n \partial_{x_2}^{m-1}) &
+\end{flalign*}
+
+\begin{flalign*}
+\exp&\left[ t(\partial_{x_1}, \partial_{x_2}) \begin{pmatrix} \sigma_1^2 & \sigma_1 \sigma_2 \gamma \\ \sigma_1 \sigma_2 \gamma & \sigma_2^2 \end{pmatrix} \begin{pmatrix} \partial_{x_1} \\ \partial_{x_2} \end{pmatrix} \right] \phi(x_1, x_2) &\\
+&= \frac{1}{4\pi\sigma_1\sigma_2 t\sqrt{1-\gamma^2}} \iint_{\mathbb{R}^2} \phi(\xi_1, \xi_2) \exp\left\{ -\frac{1}{4t} (x_1-\xi_1, x_2-\xi_2) \begin{pmatrix} \sigma_1^2 & \sigma_1 \sigma_2 \gamma \\ \sigma_1 \sigma_2 \gamma & \sigma_2^2 \end{pmatrix}^{-1} \begin{pmatrix} x_1-\xi_1 \\ x_2-\xi_2 \end{pmatrix} \right\} d\xi_1 d\xi_2 \quad |\gamma| < 1 &
+\end{flalign*}
+
+\[
+\exp\left[ t(\partial_{x_1}, \partial_{x_2}) \text{diag}(\sigma_1^2, \sigma_2^2) \begin{pmatrix} \partial_{x_1} \\ \partial_{x_2} \end{pmatrix} \right] \phi(x_1, x_2) = \frac{1}{4\pi t \sigma_1 \sigma_2} \iint_{\mathbb{R}^2} \phi(\xi_1, \xi_2) \exp\left\{ -\frac{1}{4t} (x_1-\xi_1, x_2-\xi_2) \text{diag}(\sigma_1^2, \sigma_2^2)^{-1} \begin{pmatrix} x_1-\xi_1 \\ x_2-\xi_2 \end{pmatrix} \right\} d\xi_1 d\xi_2
+\]
+
+\begin{flalign*}
+e^{a^2 t \partial_x^2} e^{-kx^2} &= \frac{1}{2a\sqrt{\pi t}} \int_{\mathbb{R}} e^{-ks^2} e^{\frac{-(x-s)^2}{4a^2 t}} ds &\\
+&= \frac{1}{2a\sqrt{\pi t}} \int_{\mathbb{R}} e^{\frac{-1}{4a^2 t} \left[ (1+4a^2 tk) \left(s - \frac{x}{1+4a^2 tk}\right)^2 + \frac{4a^2 tk x^2}{1+4a^2 tk} \right]} ds &\\
+&= e^{\frac{-kx^2}{1+4a^2 tk}} \frac{1}{2a\sqrt{\pi t}} \int_{\mathbb{R}} e^{\frac{-1}{4a^2 t}(1+4a^2 tk) \left(s - \frac{x}{1+4a^2 tk}\right)^2} ds &\\
+&= e^{\frac{-kx^2}{1+4a^2 tk}} \frac{1}{2a\sqrt{\pi t}} \frac{1}{\sqrt{\frac{1+4a^2 tk}{4a^2 t}}} \sqrt{\pi} &\\
+&= \frac{1}{\sqrt{1 + 4a^2tk}} e^{\frac{-kx^2}{1+4a^2tk}} &
+\end{flalign*}
+
+\begin{flalign*}
+\exp&\left(\beta \frac{\partial^2}{\partial x \partial y}\right)\exp(-ax^2 - by^2) &\\
+&= \exp\left[-a(x + \beta \partial_y)^2\right] \exp\left[-b(y + \beta \partial_x)^2\right] \cdot 1 &
+\end{flalign*}
+
+\begin{flalign*}
+&= \exp\left[-a(x + \beta \partial_y)^2\right] \exp[-by^2] &\\
+&= e^{-ax^2} e^{-2ax\beta \partial_y} e^{-a\beta^2 \partial_y^2} \exp[-by^2] &\\
+&= e^{-ax^2} e^{-2ax\beta \partial_y} \frac{1}{\sqrt{1 - 4ab\beta^2}} e^{\frac{-by^2}{1-4ab\beta^2}} &\\
+&= e^{-ax^2} \frac{1}{\sqrt{1 - 4ab\beta^2}} e^{\frac{-b(y-2a\beta x)^2}{1-4ab\beta^2}} &\\
+&= \frac{1}{\sqrt{1 - 4ab\beta^2}} \exp \left[ \frac{-1}{1 - 4ab\beta^2} (by^2 - 4abxy\beta + 4a^2b\beta^2 x^2 + ax^2 - 4a^2b\beta^2 x^2) \right] &\\
+&= \frac{1}{\sqrt{1 - 4ab\beta^2}} \exp \left[ \frac{-1}{1 - 4ab\beta^2} (by^2 - 4abxy\beta + ax^2) \right] &
+\end{flalign*}
+
+\begin{flalign*}
+\text{Let } &\begin{cases} \beta = 2\sigma_1\sigma_2\gamma t \\ a = \frac{1}{4t\sigma_1^2} \\ b = \frac{1}{4t\sigma_2^2} \end{cases} \text{ Then } \exp\left(2\sigma_1\sigma_2\gamma t \frac{\partial^2}{\partial x \partial y}\right) \exp\left(-\frac{1}{4t\sigma_1^2}x^2 - \frac{1}{4t\sigma_2^2}y^2\right) &\\
+&= \frac{1}{\sqrt{1 - 4\frac{1}{4t\sigma_1^2}\frac{1}{4t\sigma_2^2}(2\sigma_1\sigma_2\gamma t)^2}} \exp\left[ \frac{-1}{1 - 4\frac{1}{4t\sigma_1^2}\frac{1}{4t\sigma_2^2}(2\sigma_1\sigma_2\gamma t)^2} \left( \frac{1}{4t\sigma_2^2}y^2 - 4\frac{1}{4t\sigma_1^2}\frac{1}{4t\sigma_2^2}xy2\sigma_1\sigma_2\gamma t + \frac{1}{4t\sigma_1^2}x^2 \right) \right] &\\
+&= \frac{1}{\sqrt{1 - \gamma^2}} \exp\left[ \frac{-1}{4t(1 - \gamma^2)} \left( \frac{y^2}{\sigma_2^2} - \frac{2\gamma xy}{\sigma_1 \sigma_2} + \frac{x^2}{\sigma_1^2} \right) \right] &
+\end{flalign*}
+\end{document}
